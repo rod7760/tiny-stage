@@ -25,6 +25,9 @@
   shell: umask 022; ipa-server-install -a {{ ipa_admin_password }} --hostname={{ ansible_fqdn }} -r {{ krb_realm }} -p {{ krb_master_password }} -n {{ ansible_domain }} -U --subject 'O={{ krb_realm }} {{ ansible_date_time.iso8601_basic }}'
   args:
     creates: /etc/ipa/default.conf
+      #vars: # TODO should not have to manually set this
+    #ansible_fqdn: "ipa.tinystage.test" 
+    #ansible_domain: "tinystage.test"
 
 - name: get freeipa-fas
   git:
@@ -78,13 +81,16 @@
 - name: copy the create data script
   template:
       src: create_dummy_data.py
-      dest: /home/vagrant/create_dummy_data.py
-      mode: 0644
-      owner: vagrant
-      group: vagrant
+      # TODO change this dir /var/log/freeipa
+      dest: /tmp/create_dummy_data.py
+      mode: 0777
+      owner: root
+        # mode: 0644
+        #owner: vagrant
+        #group: vagrant
 
 - name: create dummy data
-  shell: python create_dummy_data.py > dummy-data.log
+  shell: python /tmp/create_dummy_data.py > /tmp/dummy-data.log
   args:
-    chdir: /home/vagrant/
-    creates: dummy-data.log
+    #chdir: /home/vagrant/
+    creates: /tmp/dummy-data.log

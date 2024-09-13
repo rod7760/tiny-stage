@@ -1,5 +1,5 @@
 ---
-- hosts: auth
+- hosts: localhost
   become: true
   become_method: sudo
   roles:

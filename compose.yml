@@ -1,0 +1,8 @@
+version: "3"
+services:
+  auth:
+    hostname: "ipa.tinystage.test"
+    build:
+      dockerfile: Containerfile
+    working_dir: /opt/tiny-stage
+      #working_dir: "/opt/tiny-stage/auth"
