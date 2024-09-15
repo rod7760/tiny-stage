@@ -1,7 +1,7 @@
 
 
 clean:
-	podman rm -f freeipa-server-image
+	podman rm -f freeipa-server-container
 ipa:
 	podman build -t freeipa-server-image .
 	podman run -p 443:443 --hostname ipa.tinystage.test -d --name freeipa-server-container freeipa-server-image || exit 0
