@@ -1,11 +1,11 @@
 
 
 clean:
-	podman rm -f ipa
+	podman rm -f freeipa-server-image
 ipa:
-	podman build -t ipa .
-	podman run --hostname ipa.tinystage.test -d --name ipa ipa || exit 0
-	podman exec --workdir /opt/tiny-stage ipa /bin/bash -c "ansible-playbook ansible/ipa.yml"
+	podman build -t freeipa-server-image .
+	podman run -p 443:443 --hostname ipa.tinystage.test -d --name freeipa-server-container freeipa-server-image || exit 0
+	podman exec --workdir /opt/tiny-stage freeipa-server-container /bin/bash -c "ansible-playbook ansible/ipa.yml"
 
 auth:
 	podman build -t auth .
