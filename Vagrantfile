@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 ENV['VAGRANT_NO_PARALLEL'] = 'yes'
+ENV['LIBVIRT_DEFAULT_URI'] = 'qemu:///system'
 
 domain = "tinystage.test"
 
@@ -49,7 +50,8 @@ Vagrant.configure(2) do |config|
       machine.vm.hostname = "#{mname}.#{domain}"
 
       libvirt_def = {
-        "cpus": 2,
+        "driver": "qemu",
+	"cpus": 2,
         "memory": 1024,
       }
 

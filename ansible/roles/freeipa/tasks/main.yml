@@ -16,13 +16,13 @@
       - freeipa-server
       - python-freeipa
       - python-faker
-    state: present
+    state: latest
 
 # Use a timestamp to avoid confusing browsers when SSL certs have the same serial:
 # https://listman.redhat.com/archives/freeipa-users/2015-September/msg00298.html
 #
 - name: install freeipa server
-  shell: umask 022; ipa-server-install -a {{ ipa_admin_password }} --hostname={{ ansible_fqdn }} -r {{ krb_realm }} -p {{ krb_master_password }} -n {{ ansible_domain }} -U --subject 'O={{ krb_realm }} {{ ansible_date_time.iso8601_basic }}'
+  shell: umask 022; printf "[DEFAULT]\nstartup_timeout=900" > pki-override; ipa-server-install --skip-mem-check --pki-config-override=$(realpath pki-override) -a {{ ipa_admin_password }} --hostname={{ ansible_fqdn }} -r {{ krb_realm }} -p {{ krb_master_password }} -n {{ ansible_domain }} -U --subject 'O={{ krb_realm }} {{ ansible_date_time.iso8601_basic }}'
   args:
     creates: /etc/ipa/default.conf
 
