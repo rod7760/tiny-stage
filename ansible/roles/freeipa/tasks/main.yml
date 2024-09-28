@@ -18,6 +18,14 @@
       - python-faker
     state: latest
 
+- name: copy pki-tomcatd override 
+  template:
+      src: 100-override.conf
+      dest: /etc/systemd/system/pki-tomcatd@pki-tomcat.service.d/100-override.conf
+      mode: 0644
+      owner: root
+      group: root
+
 # Use a timestamp to avoid confusing browsers when SSL certs have the same serial:
 # https://listman.redhat.com/archives/freeipa-users/2015-September/msg00298.html
 #
