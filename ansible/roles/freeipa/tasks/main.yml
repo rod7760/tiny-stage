@@ -18,6 +18,11 @@
       - python-faker
     state: latest
 
+- name: create pki-tomcatd dir
+  file:
+      path: /etc/systemd/system/pki-tomcatd@pki-tomcat.service.d/
+      state: directory
+
 - name: copy pki-tomcatd override 
   template:
       src: 100-override.conf
