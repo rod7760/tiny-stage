@@ -50,7 +50,7 @@ Vagrant.configure(2) do |config|
       machine.vm.hostname = "#{mname}.#{domain}"
 
       libvirt_def = {
-        "driver": "qemu",
+        #"driver": "qemu",
 	"cpus": 2,
         "memory": 1024,
       }
